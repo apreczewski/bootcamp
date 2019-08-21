@@ -19,14 +19,14 @@ function checkIdProjects(request, response, next) {
   return next;
 }
 
-const count = [0];
+let count = 0;
 
 function countRequests(request, response, next) {
   if (request.route.path) {
-    count[0] += 1;
+    count += 1;
   }
 
-  console.log("Request: " + count[0]);
+  console.log("Request: " + count);
   return next();
 }
 
