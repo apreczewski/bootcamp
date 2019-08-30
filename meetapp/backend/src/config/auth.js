@@ -1,4 +1,4 @@
 export default {
   secret: 'bootcampgobarbernode',
-  expiresIn: '7d',
+  expiresIn: '10d',
 };
