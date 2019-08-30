@@ -4,10 +4,10 @@ import User from '../models/User';
 class UserController {
   async store(request, response) {
     const schema = Yup.object().shape({
-      name: Yup.string.require(),
+      name: Yup.string().required(),
       email: Yup.string()
         .email()
-        .require(),
+        .required(),
       password: Yup.string()
         .required()
         .min(6),
@@ -20,9 +20,7 @@ class UserController {
 
     // Get email of datebase
     const checkUser = await User.findOne({
-      where: {
-        email: request.body.email,
-      },
+      where: { email: request.body.email },
     });
 
     // Test if email exist
@@ -33,7 +31,7 @@ class UserController {
     }
 
     // Create user in database
-    const { id, name, email, provider } = User.create(request.body);
+    const { id, name, email, provider } = await User.create(request.body);
 
     return response.json({
       id,
