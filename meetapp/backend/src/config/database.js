@@ -5,8 +5,8 @@ module.exports = {
   password: 'docker',
   database: 'meetapp',
   define: {
-    timestamps: true,
-    underscored: true,
+    timestamps: false,
+    underscored: false,
     underscoredAll: true,
   },
 };
