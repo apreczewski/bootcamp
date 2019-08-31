@@ -5,8 +5,6 @@ import auth from '../../config/auth';
 export default async (request, response, next) => {
   const authHeader = request.headers.authorization;
 
-  // return response.json(authHeader);
-
   if (!authHeader) {
     return response.status(401).json({ erro: 'Token not provided' });
   }

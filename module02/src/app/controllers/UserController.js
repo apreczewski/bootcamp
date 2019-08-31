@@ -13,21 +13,26 @@ class UserController {
         .min(6),
     });
 
+    // Validation schema
     if (!(await schema.isValid(request.body))) {
       return response.status(400).json({ error: 'Validation fails' });
     }
 
-    const userExists = await User.findOne({
+    // Get email of datebase
+    const checkUser = await User.findOne({
       where: { email: request.body.email },
     });
 
-    if (userExists) {
+    // Test if email exist
+    if (checkUser) {
       return response
         .status(400)
-        .json({ error: 'Email already exists on database!' });
+        .json({ error: 'Email aleready exists on datebase' });
     }
 
+    // Create user in database
     const { id, name, email, provider } = await User.create(request.body);
+
     return response.json({
       id,
       name,
@@ -51,6 +56,7 @@ class UserController {
       ),
     });
 
+    // Validation schema
     if (!(await schema.isValid(request.body))) {
       return response.status(400).json({ error: 'Validation fails' });
     }
@@ -60,9 +66,9 @@ class UserController {
     const user = await User.findByPk(request.userId);
 
     if (email !== user.email) {
-      const userExists = await User.findOne({ where: { email } });
+      const userExist = await User.findOne({ where: { email } });
 
-      if (userExists) {
+      if (userExist) {
         return response.status(400).json({ error: 'User already exists.' });
       }
     }
@@ -71,6 +77,7 @@ class UserController {
       return response.status(401).json({ error: 'Password does not mach' });
     }
 
+    // Update user in database
     const { id, name, provider } = await user.update(request.body);
 
     return response.json({
