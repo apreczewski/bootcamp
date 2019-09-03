@@ -50,14 +50,18 @@ class MeetupController {
       path,
     });
 
+    console.log(file);
+
     const meetup = await Meetup.create({
       date,
-      file_id: file.id,
-      user_id: request.userId,
+      file_id: 18,
+      user_id: 1,
       title,
       description,
       location,
     });
+
+    console.log(meetup);
 
     return response.json(meetup);
   }
