@@ -3,23 +3,22 @@ import { startOfHour, parseISO, isBefore } from 'date-fns';
 // import ptBR from 'date-fns/locale/pt-BR';
 
 import Meetup from '../models/Meetup';
-import File from '../models/File';
 
 class MeetupController {
   async store(request, response) {
     const schema = Yup.object().shape({
       date: Yup.date().required(),
+      file_id: Yup.number().required(),
       title: Yup.string().required(),
       description: Yup.string().required(),
       location: Yup.string().required(),
     });
 
-    // Validation schema
-    if (!(await schema.isValid(request.query))) {
+    if (!(await schema.isValid(request.body))) {
       return response.status(400).json({ error: 'Validation fails' });
     }
 
-    const { date, title, description, location } = request.query;
+    const { file_id, date, title, description, location } = request.body;
 
     const dateToCreateMeetup = startOfHour(parseISO(date));
 
@@ -43,25 +42,14 @@ class MeetupController {
         .json({ error: 'Appointment date is not available.' });
     }
 
-    const { originalname: name, filename: path } = request.file;
-
-    const file = await File.create({
-      name,
-      path,
-    });
-
-    console.log(file);
-
     const meetup = await Meetup.create({
       date,
-      file_id: file.id,
+      file_id,
       user_id: request.userId,
       title,
       description,
       location,
     });
-
-    console.log(meetup);
 
     return response.json(meetup);
   }
