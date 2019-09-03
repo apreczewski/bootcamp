@@ -54,8 +54,8 @@ class MeetupController {
 
     const meetup = await Meetup.create({
       date,
-      file_id: 18,
-      user_id: 1,
+      file_id: file.id,
+      user_id: request.userId,
       title,
       description,
       location,
