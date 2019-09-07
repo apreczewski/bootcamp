@@ -1,10 +1,8 @@
-// import { Op } from 'sequelize';
-import { format, parseISO, startOfHour } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 import User from '../models/User';
 import Meetup from '../models/Meetup';
 import Subscription from '../models/Subscription';
-import Notification from '../schemas/Notification';
+import Queue from '../../lib/Queue';
+import SubscriptionMail from '../jobs/SubscriptionMail';
 
 class SubscriptionController {
   async index(request, response) {
@@ -53,15 +51,9 @@ class SubscriptionController {
       meetup_id: meetup.id,
     });
 
-    const formattedDate = format(
-      startOfHour(parseISO(meetup.date)),
-      "dd'/'MM'/'yyyy'-'H:mm'h'",
-      { locale: pt }
-    );
-
-    await Notification.create({
-      content: `New subscripted in ${meetup.title}-${formattedDate}', user: '${user.name}`,
-      user: user.id,
+    await Queue.add(SubscriptionMail.key, {
+      meetup,
+      user,
     });
 
     return response.json(subscription);
