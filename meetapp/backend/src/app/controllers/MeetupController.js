@@ -9,22 +9,25 @@ class MeetupController {
   async index(request, response) {
     const where = {};
     const page = request.query.page || 1;
-    const { date } = request.query;
 
-    if (!date) {
-      return response.status(400).json({ error: 'Invalid date' });
+    if (request.query.date) {
+      const searchDate = parseISO(
+        request.query.date ? request.query.date : new Date()
+      );
+
+      where.date = {
+        [Op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
+      };
     }
-
-    const searchDate = parseISO(date);
-
-    where.date = {
-      [Op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
-      canceled_at: null,
-    };
 
     const meetups = await Meetup.findAll({
       where,
-      include: [User],
+      include: [
+        {
+          model: User,
+          required: true,
+        },
+      ],
       limit: 10,
       offset: 10 * page - 10,
     });
