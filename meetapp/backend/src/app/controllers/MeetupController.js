@@ -22,14 +22,22 @@ class MeetupController {
 
     const meetups = await Meetup.findAll({
       where,
+      attributes: ['id', 'date', 'past', 'title', 'description', 'location'],
       include: [
         {
           model: User,
+          attributes: ['id', 'name', 'email'],
           required: true,
         },
       ],
       limit: 10,
       offset: 10 * page - 10,
+    });
+
+    meetups.forEach((meetup, index) => {
+      if (meetup.past) {
+        meetups.splice(index);
+      }
     });
 
     return response.json(meetups);

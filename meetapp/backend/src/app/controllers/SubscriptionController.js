@@ -8,9 +8,7 @@ import SubscriptionMail from '../jobs/SubscriptionMail';
 class SubscriptionController {
   async index(request, response) {
     const subscriptions = await Subscription.findAll({
-      where: {
-        user_id: request.userId,
-      },
+      where: { user_id: request.userId },
       include: [
         {
           model: Meetup,
