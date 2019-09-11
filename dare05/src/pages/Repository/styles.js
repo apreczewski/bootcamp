@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Loading = styled.div`
   color: #fff;
@@ -79,6 +79,18 @@ export const IssuesList = styled.ul`
             color: #7159c1;
           }
         }
+
+        span {
+          background: #7159c1;
+          color: #fff;
+          border-radius: 9px;
+          font-size: 10px;
+          font-weight: 600;
+          height: 20px;
+          line-height: 15px;
+          margin-left: 10px;
+          padding: 5px;
+        }
       }
 
       p {
@@ -92,21 +104,4 @@ export const IssuesList = styled.ul`
       background: #eee;
     }
   }
-`;
-
-export const Label = styled.span.attrs(props => ({
-  labelColor: props.labelColor,
-}))`
-  ${props =>
-    css`
-      background: ${`#${props.labelColor}`};
-      color: #2b3340;
-      border-radius: 9px;
-      font-size: 10px;
-      font-weight: 600;
-      height: 20px;
-      line-height: 15px;
-      margin-left: 10px;
-      padding: 5px;
-    `}
 `;
