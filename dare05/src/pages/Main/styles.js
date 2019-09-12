@@ -1,6 +1,8 @@
 import styled, { keyframes, css } from 'styled-components';
 
-export const Form = styled.form`
+export const Form = styled.form.attrs(props => ({
+  error: props.error,
+}))`
   margin-top: 30px;
   display: flex;
   flex-direction: row;
@@ -11,6 +13,7 @@ export const Form = styled.form`
     padding: 10px 15px;
     border-radius: 9px;
     font-size: 16px;
+    border: 2px solid ${props => (props.error ? '#ff6b6b' : '#eee')};
   }
 `;
 

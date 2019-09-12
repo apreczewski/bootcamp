@@ -110,3 +110,46 @@ export const Label = styled.span.attrs(props => ({
       padding: 5px;
     `}
 `;
+
+export const IssueFilter = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+
+  button {
+    width: 75px;
+    background: #8c82c6;
+    color: #f7f8f5;
+    border-radius: 9px;
+    outline: 0;
+    border: 0;
+    padding: 8px;
+    margin: 0 0.25rem;
+
+    &:nth-child(${props => props.active + 1}) {
+      background: #576574;
+      color: white;
+    }
+  }
+`;
+
+export const PageActions = styled.div`
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+
+  button {
+    transition: opacity 0.25s ease-out;
+    border-radius: 9px;
+    outline: 0;
+    border: 0;
+    padding: 8px;
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+`;

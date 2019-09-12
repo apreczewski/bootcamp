@@ -14,6 +14,7 @@ export default class Main extends Component {
     newRepository: '',
     repositories: [],
     loading: false,
+    error: null,
   };
 
   componentDidMount() {
@@ -39,32 +40,44 @@ export default class Main extends Component {
   handleSubmit = async event => {
     event.preventDefault();
 
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: false });
 
-    const { newRepository, repositories } = this.state;
+    try {
+      const { newRepository, repositories } = this.state;
 
-    const response = await api.get(`/repos/${newRepository}`);
+      const response = await api.get(`/repos/${newRepository}`);
 
-    const data = {
-      name: response.data.full_name,
-    };
+      const data = {
+        name: response.data.full_name,
+      };
 
-    this.setState({
-      repositories: [...repositories, data],
-      newRepository: '',
-      loading: false,
-    });
+      if (newRepository) throw new Error('You need insert a repository.');
+
+      const checkRepository = repositories.filter({ name: newRepository });
+
+      if (checkRepository) throw new Error('Duplicated repository');
+
+      this.setState({
+        repositories: [...repositories, data],
+        newRepository: '',
+        loading: false,
+      });
+    } catch (error) {
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   render() {
-    const { newRepository, repositories, loading } = this.state;
+    const { newRepository, repositories, loading, error } = this.state;
     return (
       <Container>
         <h1>
           <FaGithubAlt />
           Repositorys
         </h1>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} error={error}>
           <input
             type="text"
             placeholder="Add Repository"
