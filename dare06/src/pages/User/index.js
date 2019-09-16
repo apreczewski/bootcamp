@@ -8,6 +8,7 @@ import {
   Avatar,
   Name,
   Bio,
+  Loading,
   Stars,
   Starred,
   OwnerAvatar,
@@ -39,15 +40,13 @@ export default class User extends Component {
     this.load();
   }
 
-  load = async (page = 1) => {
+  load = async page => {
     const { stars } = this.state;
     const { navigation } = this.props;
     const user = navigation.getParam('user');
 
-    this.setState({ loading: true });
-
     const response = await api.get(`/users/${user.login}/starred`, {
-      params: { page },
+      params: { page, per_page: 30 },
     });
 
     this.setState({
