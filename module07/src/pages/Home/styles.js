@@ -3,7 +3,7 @@ import { darken } from 'polished';
 
 export const ProductList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   list-style: none;
   margin-top: 30px;
@@ -18,14 +18,14 @@ export const ProductList = styled.div`
 
     img {
       align-self: center;
-      max-width: 230px;
+      max-width: 200px;
 
-      &:hover {
+      /* &:hover {
         position: absolute;
         transition: all 0.4s ease;
         opacity: 0;
         background-color: #7159c1;
-      }
+      } */
     }
 
     > strong {
