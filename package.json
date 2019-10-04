@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "@react-native-community/async-storage": "^1.6.1",
-    "react-native-cli": "^2.0.1",
-    "react-native-webview": "^7.0.5"
+    "reactotron-redux-saga": "^4.2.2"
   }
 }
