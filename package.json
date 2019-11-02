@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "polished": "^3.4.1",
     "reactotron-redux-saga": "^4.2.2"
   }
 }

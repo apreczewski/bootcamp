@@ -1,7 +1,3 @@
-import React from 'react';
+import styled from 'styled-components';
 
-// import { Container } from './styles';
-
-export default function SingIn() {
-  return <h1>SignUp</h1>;
-}
+export const Container = styled.div``;
